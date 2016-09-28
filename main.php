@@ -1,5 +1,7 @@
 <?php
 
+require_once('process_commands.php');
+
 if (isset($argv[1]))
 {
 	/* Error variable to exit loop when syntax error is found */
@@ -31,7 +33,8 @@ if (isset($argv[1]))
 	print_r($cmd);
 	store_variables($cmd, $vars);
 	print_r($vars);
-
+	get_rule($cmd, $vars);
+	print_r($vars);
 }
 else
 {
