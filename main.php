@@ -33,14 +33,27 @@ if (isset($argv[1]))
 	}
 	store_variables($cmd, $vars);
 	get_facts($cmd, $vars, $query);
-	print_r($cmd);
-	print_r($vars);
 	process_commands($cmd, $vars);
-	print_r($vars);
+	process_query($query, $vars);
 }
 else
 {
 	print("No file specified".PHP_EOL);
+}
+
+function process_query($query, $vars)
+{
+	$i = 0;
+	while ($query[$i])
+	{
+		if ($vars[$query[$i]] == 1)
+			echo $query[$i]." is True".PHP_EOL;
+		else if ($vars[$query[$i]] == 0)
+			echo $query[$i]." is False".PHP_EOL;
+		else
+			echo $query[$i]." is undertermined".PHP_EOL;
+		$i++;
+	}
 }
 
 function remove_comments($line)

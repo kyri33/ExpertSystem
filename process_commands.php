@@ -32,7 +32,7 @@
 				$i = 1;
 				while ($line[$i])
 				{
-					$query[$line[$i]] = -1;
+					array_push($query, $line[$i]);
 					$i++;
 				}
 				array_splice($cmd, $k, 1);
@@ -57,10 +57,14 @@
 		else if (strpos($str, '|'))
 		{
 			$spl = preg_split("/[|]/", $str, -1, PREG_SPLIT_NO_EMPTY);
-			if (left($spl[0], $vars) == 1 || left($spl[1], $vars) == 1)
-				return 1;
-			else
-				return 0;
+			$i = 0;
+			while ($spl[$i])
+			{
+				if (left($spl[$i], $vars) == 1)
+					return 1;
+				$i++;
+			}
+			return 0;
 		}
 		else if (strpos($str, '+'))
 		{
@@ -96,12 +100,7 @@
 		{
 			$implies = preg_split('/=>/', $cmd[$i], -1, PREG_SPLIT_NO_EMPTY);
 			if (left($implies[0], $vars) == 1)
-			{
-				echo $implies[0]." is true".PHP_EOL;
 				right($implies[1], $vars);
-			}
-			else
-				echo $implies[0]." is false".PHP_EOL;
 			$i++;
 		}
 	}
