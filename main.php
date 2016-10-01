@@ -33,9 +33,10 @@ if (isset($argv[1]))
 	}
 	store_variables($cmd, $vars);
 	get_facts($cmd, $vars, $query);
-	print_r($vars);
 	print_r($cmd);
+	print_r($vars);
 	process_commands($cmd, $vars);
+	print_r($vars);
 }
 else
 {
