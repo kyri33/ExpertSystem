@@ -11,9 +11,10 @@ if (isset($argv[1]))
 	/* Variable to store line number for errors */
 	$lineNo = 0;
 
-	/* Array to store all variables and propositions*/
+	/* Array to store all variables, propositions and queries*/
 	$vars = array();
 	$cmd = array();
+	$query = array();
 
 	/*
 	 * Open the file given as argument
@@ -30,11 +31,11 @@ if (isset($argv[1]))
 		if ($line[0] != '#')
 			array_push($cmd, $line);
 	}
-	print_r($cmd);
 	store_variables($cmd, $vars);
+	get_facts($cmd, $vars, $query);
 	print_r($vars);
-	get_rule($cmd, $vars);
-	print_r($vars);
+	print_r($cmd);
+	process_commands($cmd, $vars);
 }
 else
 {
