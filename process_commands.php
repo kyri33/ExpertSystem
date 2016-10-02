@@ -42,7 +42,7 @@
 		}
 	}
 
-	function left(&$str, &$vars)
+	function left(&$str, $vars)
 	{
 		if (strpos($str, '^'))
 		{
@@ -86,19 +86,38 @@
 				$flag = 0;
 				$i++;
 			}
-			if ($vars[$str[$i]] == $flag)
+			if ($vars[$str[$i]] == $flag || $str[0] == '1')
 				return 1;
 			else
 				return 0;
 		}
 	}
 
+	function do_brackets(&$implies, $vars)
+	{
+		//preg_match_all("/\([^)]*\)/", $implies[0], $brackets);
+		preg_match_all("/\(([^)]*)\)/", $implies[0], $brackets);
+		$i = 0;
+		while ($brackets[1][$i])
+		{
+			$flag = left($brackets[1][$i], $vars);
+			$implies[0] = str_replace($brackets[0][$i], strval($flag), $implies[0]); 
+			$i++;
+		}
+	}
+
 	function process_commands($cmd, &$vars)
 	{
 		$i = 0;
+		print_r($cmd);
 		while ($cmd[$i])
 		{
 			$implies = preg_split('/=>/', $cmd[$i], -1, PREG_SPLIT_NO_EMPTY);
+			if (strpos($implies[0], '('))
+			{
+				do_brackets($implies, $vars);
+				print_r($implies);
+			}
 			if (left($implies[0], $vars) == 1)
 				right($implies[1], $vars);
 			$i++;

@@ -4,5 +4,7 @@ A + B => D
 C | D => E
 C ^ D => F
 B | D | E + A => G
+F | A ^ E | G => Y
+Y + (D | E) | (C | A) + F => X
 =AB
-?ABCDEFG
+?ABCDEFGYX
